@@ -10,6 +10,7 @@ class Profile(models.Model):
         ('OMIP','OMIP'),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    temp_user_name_omegaup = models.CharField(max_length=100, blank=True, null=True)
     birthday = models.CharField(max_length=150)
     phone = models.PhoneModelField(blank=True)
     category = models.CharField(max_length=4, choices=CATEGORY)
