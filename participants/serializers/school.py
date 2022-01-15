@@ -12,4 +12,4 @@ class SchoolModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=School
-        fields = ['name', 'direction']
+        fields = ['id','name', 'direction']
