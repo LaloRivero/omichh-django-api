@@ -9,9 +9,9 @@ from django.utils import timezone
 # Django REST framework
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from phonenumber_field.serializerfields import PhoneNumberField
 
 # Models
-from django.contrib.auth.models import User
 from participants.models import Participant, School, Scores
 
 # Utilities
@@ -28,9 +28,28 @@ class CreateParticipantSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=100, allow_blank=False)
     email = serializers.EmailField(max_length=150, allow_blank=False)
     birthday = serializers.CharField(max_length=150, allow_blank=False)
+    grade = serializers.IntegerField(min_value=1, max_value=6)
+    phone = PhoneNumberField()
 
     town = serializers.CharField(max_length=150, allow_blank=False)
     category = serializers.CharField(max_length=4, allow_blank=False)
+
+    tutor_name = serializers.CharField(max_length=100)
+    tutor_phone = PhoneNumberField()
+    tutor_email = serializers.EmailField(max_length=100)
+
+
+
+    def validate(self, data):
+        ''' Validate the data from a new participant '''
+
+        email = data['email']
+        tutor_email = data['tutor_email']
+
+        if email == tutor_email:
+            raise serializers.ValidationError({'ERROR':'participant email and tutor email must to be different'})
+
+        return data
 
     def create(self,data):
         """ Handle participant creation"""
@@ -40,8 +59,13 @@ class CreateParticipantSerializer(serializers.Serializer):
                                                 last_name=data['last_name'],
                                                 email=data['email'],
                                                 birthday=data['birthday'],
+                                                grade=data['grade'],
+                                                phone=data['phone'],
                                                 town=data['town'],
-                                                category=data['category'])
+                                                category=data['category'],
+                                                tutor_name=data['tutor_name'],
+                                                tutor_phone=data['tutor_phone'],
+                                                tutor_email=data['tutor_email'])
 
         participant.save()
 
