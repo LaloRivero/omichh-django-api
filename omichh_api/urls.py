@@ -5,7 +5,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 # Views
-from participants.views import ParticipantViewSet
+from participants.views.participant import ParticipantViewSet
 
 router = DefaultRouter()
 router.register(r'participants', ParticipantViewSet, basename='participants' )
