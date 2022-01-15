@@ -34,6 +34,7 @@ class Participant(models.Model):
     temp_user_name_omegaup = models.CharField(max_length=100, blank=True, null=True)
     birthday = models.CharField(max_length=150)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
+    grade = models.IntegerField()
     phone = PhoneNumberField(blank=True)
     town = models.CharField(max_length=150)
     category = models.CharField(max_length=4, choices=CATEGORY)
