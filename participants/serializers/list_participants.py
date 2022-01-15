@@ -19,8 +19,7 @@ class ListParticipantSerializer(serializers.ModelSerializer):
     school = SchoolModelSerializer(read_only=True)
     class Meta:
         model = Participant
-        fields = ['type_of_participant',
-                  'first_name',
+        fields = ['first_name',
                   'last_name',
                   'temp_user_name_omegaup',
                   'category',

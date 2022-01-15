@@ -18,26 +18,25 @@ from participants.models import Participant, School, Scores
 import jwt
 from datetime import timedelta
 
-class CreateParticipantSerializer(serializers.Serializer):
+class CreateParticipantSerializer(serializers.ModelSerializer):
     """ Handle the inscription of a participant and validate
     the user account by the email.
     """
-
-    type_of_participant = serializers.CharField(max_length=50, allow_blank=False)
-    first_name = serializers.CharField(max_length=100, allow_blank=False)
-    last_name = serializers.CharField(max_length=100, allow_blank=False)
-    email = serializers.EmailField(max_length=150, allow_blank=False)
-    birthday = serializers.CharField(max_length=150, allow_blank=False)
-    grade = serializers.IntegerField(min_value=1, max_value=6)
-    phone = PhoneNumberField()
-
-    town = serializers.CharField(max_length=150, allow_blank=False)
-    category = serializers.CharField(max_length=4, allow_blank=False)
-
-    tutor_name = serializers.CharField(max_length=100)
-    tutor_phone = PhoneNumberField()
-    tutor_email = serializers.EmailField(max_length=100)
-
+    class Meta:
+        model = Participant
+        fields = ['type_of_participant',
+                  'first_name',
+                  'last_name',
+                  'email',
+                  'birthday',
+                  'school',
+                  'grade',
+                  'phone',
+                  'town',
+                  'category',
+                  'tutor_name',
+                  'tutor_phone',
+                  'tutor_email']
 
 
     def validate(self, data):
@@ -54,11 +53,14 @@ class CreateParticipantSerializer(serializers.Serializer):
     def create(self,data):
         """ Handle participant creation"""
 
+        school = School.objects.get(pk=data['school'])
+
         participant = Participant.objects.create(type_of_participant=data['type_of_participant'],
                                                 first_name=data['first_name'],
                                                 last_name=data['last_name'],
                                                 email=data['email'],
                                                 birthday=data['birthday'],
+                                                school = data['school'],
                                                 grade=data['grade'],
                                                 phone=data['phone'],
                                                 town=data['town'],
@@ -78,22 +80,22 @@ class CreateParticipantSerializer(serializers.Serializer):
         """ Send a confirmation email to verify the participant  """
 
         verification_token = self.gen_verification_token(participant)
-        subject = f'Welcome @{user.username}! Verify your account to start using the App.'
+        subject = f'Welcome @{participant.first_name} {participant.last_name}! Verify your account to start using the App.'
         from_email = 'Application <noreply@app.com>'
         content = render_to_string(
             'emails/account_verification.html',
-            {'token': verification_token, 'user': user}
+            {'token': verification_token, 'participant': participant}
         )
         msg = EmailMultiAlternatives(
-            subject, content, from_email, [user.email])
+            subject, content, from_email, [participant.email])
         msg.attach_alternative(content, "text/html")
         msg.send()
 
-    def gen_verification_token(self, user):
+    def gen_verification_token(self, participant):
         """ Create a JWT token that the user can user to verify its account. """
         exp_date = timezone.now() + timedelta(days=3)
         payload = {
-            'user': user.username,
+            'participant': participant.first_name + participant.last_name,
             'exp': int(exp_date.timestamp()),
             'type': 'email_confirmation'
         }
