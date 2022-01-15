@@ -12,6 +12,7 @@ from participants.serializers.school import SchoolModelSerializer
 
 class SchoolViewSet(mixins.CreateModelMixin,
                     mixins.RetrieveModelMixin,
+                    mixins.ListModelMixin,
                     viewsets.GenericViewSet):
     ''' School model viewset '''
 
