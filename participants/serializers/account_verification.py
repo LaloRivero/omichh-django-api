@@ -38,7 +38,7 @@ class AccountVerificationSerializer(serializers.Serializer):
         ''' Update participan verified status '''
 
         payload = self.context['payload']
-        participant = Participan.objects.get(email=payload["email"])
+        participant = Participant.objects.get(email=payload["participant"])
         participant.is_verified = True
         participant.save()
         return participant

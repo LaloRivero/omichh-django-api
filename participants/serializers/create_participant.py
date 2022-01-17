@@ -100,7 +100,7 @@ class CreateParticipantSerializer(serializers.ModelSerializer):
         """ Create a JWT token that the user can user to verify its account. """
         exp_date = timezone.now() + timedelta(days=3)
         payload = {
-            'participant': participant.first_name + participant.last_name,
+            'participant': participant.email,
             'exp': int(exp_date.timestamp()),
             'type': 'email_confirmation'
         }
