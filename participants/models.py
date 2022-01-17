@@ -6,7 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 class School(models.Model):
     """ School model """
 
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, unique=True)
     direction = models.CharField(max_length=250)
     principal_name = models.CharField(max_length=150, blank=True, null=True)
     principal_email = models.EmailField(max_length=100, blank=True, null=True)
@@ -30,12 +30,12 @@ class Participant(models.Model):
     type_of_participant = models.CharField(max_length=50, choices=TYPE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=150)
+    email = models.EmailField(max_length=150, unique=True)
     temp_user_name_omegaup = models.CharField(max_length=100, blank=True, null=True)
     birthday = models.CharField(max_length=150)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     grade = models.IntegerField()
-    phone = PhoneNumberField(blank=True)
+    phone = PhoneNumberField(blank=True, unique=True)
     town = models.CharField(max_length=150)
     category = models.CharField(max_length=4, choices=CATEGORY)
     tutor_name = models.CharField(max_length=100, blank=True, null=True)
