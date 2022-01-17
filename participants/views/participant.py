@@ -9,6 +9,7 @@ from participants.models import Participant
 # Serializer
 from participants.serializers.list_participants import ListParticipantSerializer
 from participants.serializers.create_participant import CreateParticipantSerializer
+from participants.serializers.account_verification import AccountVerificationSerializer
 
 class ParticipantViewSet(mixins.CreateModelMixin,
                          mixins.ListModelMixin,
@@ -34,3 +35,17 @@ class ParticipantViewSet(mixins.CreateModelMixin,
 
         serializer = ListParticipantSerializer(queryset, many=True)
         return Response(serializer.data)
+
+
+@api_view(['POST'])
+def participant_verification(request):
+    ''' Participant email verification '''
+
+    if request.method == 'POST':
+        serializer = AccountVerificationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        data = {'message': 'Account verification success'}
+
+        return Response(data, status=status.HTTP_200_OK)
