@@ -14,6 +14,9 @@ from phonenumber_field.serializerfields import PhoneNumberField
 # Models
 from participants.models import Participant, School, Scores
 
+# Serializers
+from participants.serializers.school import SchoolModelSerializer
+
 # Utilities
 import jwt
 from datetime import timedelta
@@ -22,6 +25,8 @@ class CreateParticipantSerializer(serializers.ModelSerializer):
     """ Handle the inscription of a participant and validate
     the user account by the email.
     """
+
+    school = serializers.SlugRelatedField(queryset=School.objects.all(), slug_field='id')
     class Meta:
         model = Participant
         fields = ['type_of_participant',
@@ -41,7 +46,6 @@ class CreateParticipantSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         ''' Validate the data from a new participant '''
-
         email = data['email']
         tutor_email = data['tutor_email']
 
@@ -50,24 +54,25 @@ class CreateParticipantSerializer(serializers.ModelSerializer):
 
         return data
 
-    def create(self,data):
+    def create(self,validated_data):
         """ Handle participant creation"""
+        print(validated_data)
 
-        school = School.objects.get(pk=data['school'])
+        school = School.objects.get(id=validated_data["school"].id)
 
-        participant = Participant.objects.create(type_of_participant=data['type_of_participant'],
-                                                first_name=data['first_name'],
-                                                last_name=data['last_name'],
-                                                email=data['email'],
-                                                birthday=data['birthday'],
-                                                school = data['school'],
-                                                grade=data['grade'],
-                                                phone=data['phone'],
-                                                town=data['town'],
-                                                category=data['category'],
-                                                tutor_name=data['tutor_name'],
-                                                tutor_phone=data['tutor_phone'],
-                                                tutor_email=data['tutor_email'])
+        participant = Participant(type_of_participant=validated_data['type_of_participant'],
+                                                first_name=validated_data['first_name'],
+                                                last_name=validated_data['last_name'],
+                                                email=validated_data['email'],
+                                                birthday=validated_data['birthday'],
+                                                grade=validated_data['grade'],
+                                                school=school,
+                                                phone=validated_data['phone'],
+                                                town=validated_data['town'],
+                                                category=validated_data['category'],
+                                                tutor_name=validated_data['tutor_name'],
+                                                tutor_phone=validated_data['tutor_phone'],
+                                                tutor_email=validated_data['tutor_email'])
 
         participant.save()
 
