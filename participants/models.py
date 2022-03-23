@@ -7,6 +7,12 @@ class School(models.Model):
     """ School model """
 
     name = models.CharField(max_length=250, unique=True)
+    CATEGORY = [
+        ('OMI','Media Superior'),
+        ('OMIS','Secundaria'),
+        ('OMIP','Primaria'),
+    ]
+    category = models.CharField(max_length=4, choices=CATEGORY)
     direction = models.CharField(max_length=250)
     principal_name = models.CharField(max_length=150, blank=True, null=True)
     principal_email = models.EmailField(max_length=100, blank=True, null=True)
@@ -52,7 +58,7 @@ class Participant(models.Model):
         return f"{self.first_name} {self.last_name}"
 
     class Meta:
-         ordering = ['category']
+         ordering = ['is_verified']
 
 
 class Scores(models.Model):
