@@ -125,3 +125,4 @@ eventup/media/
 .vscode/
 
 */migrations
+.DS_Store
