@@ -42,12 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Local apps
+    'participants',
+
     # Third party apps
     'rest_framework',
     'corsheaders',
-
-    # Local apps
-    'participants'
 ]
 
 MIDDLEWARE = [

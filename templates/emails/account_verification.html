@@ -1,9 +1,12 @@
-<p>Welcome @{{ participant.first_name }} {{participant.last_name}}!</p>
+<p>Hola @{{ participant.first_name }} {{participant.last_name}}!</p>
 <p></p>
 
 <p>
-  Before you start using <b>This App</b> you need to verfied your account.
-  Please visit the following <a href="">Link</a> and enter this code.
+  Tu registro en la Olimpiada Mexicana de informatica casi esta completo, ahora
+  hay que verificar tu cuenta de correo. Por favor da click
+  <a href="localhost:3000/verify/{{token}}">aqui</a>.
+
+  Si esto no funciona copia y pega esto en tu navegador: localhost:3000/verify/{{token}}
 </p>
 
 <p style="text-align: center">
