@@ -20,7 +20,6 @@ from participants.serializers.school import SchoolModelSerializer
 # Utilities
 import jwt
 from datetime import timedelta
-
 class CreateParticipantSerializer(serializers.ModelSerializer):
     """ Handle the inscription of a participant and validate
     the user account by the email.
@@ -85,15 +84,32 @@ class CreateParticipantSerializer(serializers.ModelSerializer):
         """ Send a confirmation email to verify the participant  """
 
         verification_token = self.gen_verification_token(participant)
-        subject = f'Welcome @{participant.first_name} {participant.last_name}! Verify your account to start using the App.'
-        from_email = 'Application <noreply@app.com>'
-        content = render_to_string(
-            'emails/account_verification.html',
-            {'token': verification_token, 'participant': participant}
-        )
+        subject = f'Completa tu registro @{participant.first_name} {participant.last_name}!'
+        from_email = 'OMICHH <noreply@omichh.org>'
+        text_content = "este es un contenido en text del correo"
+        html_content = f'''
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body>
+                    <h3 style="color: #0091bf; font-weight: bold;">Hola @{ participant.first_name } {participant.last_name}!</h3>
+                    <p></p>
+                    <p style="color: #2a2a2a; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
+                    Tu registro en la Olimpiada Mexicana de informatica casi esta completo, ahora
+                    hay que verificar tu cuenta de correo.
+                    <br/> Por favor copia y pega esto en tu navegador: <br/> <a style="color:blue;" href="localhost:3000/verify/{verification_token}">localhost:3000/verify/{verification_token}</a>
+                    </p>
+                </body>
+                </html>
+            '''
         msg = EmailMultiAlternatives(
-            subject, content, from_email, [participant.email])
-        msg.attach_alternative(content, "text/html")
+            subject, text_content, from_email, [participant.email])
+        msg.attach_alternative(html_content, "text/html")
+        msg.content_subtype = "html"
         msg.send()
 
     def gen_verification_token(self, participant):
