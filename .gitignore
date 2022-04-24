@@ -124,5 +124,5 @@ eventup/media/
 .envs/
 .vscode/
 
-*/migrations
+0001_initial.py
 .DS_Store
