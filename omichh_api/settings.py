@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-z-rl-k3j2dw4ffizumgi&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG'))=="1"
 
-ALLOWED_HOSTS = ['127.0.0.1', 'omichh.netlifly.app','omichh.org']
+ALLOWED_HOSTS = ['127.0.0.1', 'omichh.netlifly.app', 'omichh.org', 'omichhapi.herokuapp.com' ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.googlemail.com'
