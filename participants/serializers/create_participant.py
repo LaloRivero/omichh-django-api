@@ -25,7 +25,7 @@ class CreateParticipantSerializer(serializers.ModelSerializer):
     the user account by the email.
     """
 
-    school = serializers.SlugRelatedField(queryset=School.objects.all(), slug_field='id')
+    #school = serializers.SlugRelatedField(queryset=School.objects.all(), slug_field='id')
     class Meta:
         model = Participant
         fields = ['type_of_participant',
@@ -33,7 +33,7 @@ class CreateParticipantSerializer(serializers.ModelSerializer):
                   'last_name',
                   'email',
                   'birthday',
-                  'school',
+                  #'school',
                   'grade',
                   'phone',
                   'town',
@@ -65,7 +65,7 @@ class CreateParticipantSerializer(serializers.ModelSerializer):
                                                 email=validated_data['email'],
                                                 birthday=validated_data['birthday'],
                                                 grade=validated_data['grade'],
-                                                school=school,
+                                                #school=school,
                                                 phone=validated_data['phone'],
                                                 town=validated_data['town'],
                                                 category=validated_data['category'],
