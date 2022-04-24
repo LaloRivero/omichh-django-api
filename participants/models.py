@@ -39,7 +39,7 @@ class Participant(models.Model):
     email = models.EmailField(max_length=150, unique=True)
     temp_user_name_omegaup = models.CharField(max_length=100, blank=True, null=True)
     birthday = models.CharField(max_length=150)
-    school = models.ForeignKey(School, on_delete=models.CASCADE)
+    school = models.ForeignKey(School, on_delete=models.DO_NOTHING)
     grade = models.IntegerField()
     phone = PhoneNumberField(blank=True, unique=True)
     town = models.CharField(max_length=150)
