@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-z-rl-k3j2dw4ffizumgi&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG'))=="1"
 
-ALLOWED_HOSTS = ['127.0.0.1', 'omichh.netlifly.app', 'omichh.org', 'omichhapi.herokuapp.com' ]
+ALLOWED_HOSTS = ['*','127.0.0.1', 'omichh.netlifly.app', 'omichh.org', 'omichhapi.herokuapp.com' ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.googlemail.com'
@@ -95,19 +95,20 @@ from decouple import config
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-if DEBUG == True:
+''' if DEBUG == True:
     DATABASES = {   
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-else:
-    DATABASES = {
-        'default':dj_database_url.config(
-            default=config('DATABASE_URL')
-        )
-    }
+else: '''
+
+DATABASES = {
+    'default':dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
 
 
 # Password validation
