@@ -57,7 +57,7 @@ class CreateParticipantSerializer(serializers.ModelSerializer):
         """ Handle participant creation"""
         print(validated_data)
 
-        school = School.objects.get(id=validated_data["school"].id)
+        #school = School.objects.get(id=validated_data["school"].id)
 
         participant = Participant(type_of_participant=validated_data['type_of_participant'],
                                                 first_name=validated_data['first_name'],
