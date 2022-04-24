@@ -101,7 +101,7 @@ class CreateParticipantSerializer(serializers.ModelSerializer):
                     <p style="color: #2a2a2a; font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">
                     Tu registro en la Olimpiada Mexicana de informatica casi esta completo, ahora
                     hay que verificar tu cuenta de correo.
-                    <br/> Por favor copia y pega esto en tu navegador: <br/> <a style="color:blue;" href="localhost:3000/verify/{verification_token}">localhost:3000/verify/{verification_token}</a>
+                    <br/> Por favor copia y pega esto en tu navegador: <br/> <a style="color:blue;" href="https://www.omichh.org/verify/{verification_token}">https://www.omichh.org/verify/{verification_token}</a>
                     </p>
                 </body>
                 </html>
