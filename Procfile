@@ -1,1 +1,1 @@
-web:gunicorn app:omichh_api.wsgi
+web: gunicorn omichh_api.wsgi --log-file -
