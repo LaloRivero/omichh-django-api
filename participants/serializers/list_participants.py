@@ -24,5 +24,6 @@ class ListParticipantSerializer(serializers.ModelSerializer):
                   'temp_user_name_omegaup',
                   'category',
                   'email',
+                  'town',
                   'school',
                   'is_verified']
