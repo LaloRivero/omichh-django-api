@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-z-rl-k3j2dw4ffizumgi&=2o)4zgx4$_u5o&+86kx#m33)vpbb')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get('DEBUG'))=="1"
+DEBUG = False
 
 ALLOWED_HOSTS = ['*','127.0.0.1', 'omichh.netlifly.app', 'omichh.org', 'omichhapi.herokuapp.com' ]
 
@@ -95,14 +95,13 @@ from decouple import config
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-''' if DEBUG == True:
-    DATABASES = {   
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+
+''' DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else: '''
+} '''
 
 DATABASES = {
     'default':dj_database_url.config(
