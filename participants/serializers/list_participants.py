@@ -21,9 +21,15 @@ class ListParticipantSerializer(serializers.ModelSerializer):
         model = Participant
         fields = ['first_name',
                   'last_name',
-                  'temp_user_name_omegaup',
-                  'category',
                   'email',
+                  'temp_user_name_omegaup',
+                  'birthday',
+                  'grade',
+                  'phone',
+                  'category',
                   'town',
                   'school',
+                  'tutor_name',
+                  'tutor_phone',
+                  'tutor_email',
                   'is_verified']
